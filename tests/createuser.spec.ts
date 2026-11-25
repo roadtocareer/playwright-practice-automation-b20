@@ -1,13 +1,17 @@
 import { faker } from '@faker-js/faker';
 import { test, expect } from '@playwright/test';
 import { UserData, UserPage } from '../pages/UserPage.pom';
-import { UserLogin } from '../pages/UserLogin.pom';
+import { LoginModel, UserLogin } from '../pages/UserLogin.pom';
 import { generateRandomNumber } from '../utils/randomNumber';
 
 test('User login', async ({ page }) => {
     const userLogin = new UserLogin(page);
+    const loginModel: LoginModel = {
+        email: "admin@test.com",
+        password: "1234"
+    };
     await userLogin.visitPage();
-    await userLogin.login("admin@test.com", "1234");
+    await userLogin.login(loginModel);
     await page.waitForURL(/dashboard/);
     await page.context().storageState({ path: 'auth.json' });
 });

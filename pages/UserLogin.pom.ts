@@ -1,5 +1,9 @@
 import { Locator, Page } from "@playwright/test";
 
+export interface LoginModel{
+    email:string,
+    password:string
+}
 export class UserLogin{
     readonly page:Page;
     readonly emailInput:Locator;
@@ -15,9 +19,9 @@ export class UserLogin{
     async visitPage(){
         await this.page.goto("/");
     }
-    async login(email:string,password:string){
-        await this.emailInput.fill(email);
-        await this.passwordInput.fill(password);
+    async login(loginModel:LoginModel){
+        await this.emailInput.fill(loginModel.email);
+        await this.passwordInput.fill(loginModel.password);
         await this.loginButton.click();
     }
 }
